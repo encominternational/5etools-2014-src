@@ -55,13 +55,13 @@ jobs:
                sed -i 's/sw.js//g' .gitignore
                sed -i 's/sw-injector.js//g' .gitignore
 
-         -  name: Build SEO Pages
-            env:
-               VET_SEO_IS_DEV_MODE: true
-               VET_BASE_SITE_URL: "https://${{ github.repository_owner }}.github.io/"
-               VET_SEO_IS_SKIP_UA_ETC: true
-            run: |
-               npm run build:seo -- ${{ github.ref_name }}
+#         -  name: Build SEO Pages
+#            env:
+#               VET_SEO_IS_DEV_MODE: true
+#               VET_BASE_SITE_URL: "https://${{ github.repository_owner }}.github.io/"
+#               VET_SEO_IS_SKIP_UA_ETC: true
+#            run: |
+#               npm run build:seo -- ${{ github.ref_name }}
 
          -  name: Cleanup
             run: |
