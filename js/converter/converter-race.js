@@ -5,6 +5,7 @@ import {RaceImmResVulnTag, RaceLanguageTag, RaceTraitTag} from "./converterutils
 import {EntryCoalesceEntryLists, EntryCoalesceRawLines} from "./converterutils-entrycoalesce.js";
 import {ConverterFeatureBase} from "./converter-feature.js";
 import {SITE_STYLE__CLASSIC} from "../consts.js";
+import {PropOrder} from "../utils-proporder.js";
 
 class _ConversionStateTextRace extends ConversionStateTextBase {
 
@@ -317,7 +318,7 @@ export class ConverterRace extends ConverterFeatureBase {
 
 		const text = entry.entries[0];
 
-		const mSimple = /^Your (?:base )?(?:walking )?speed is (?<speed>\d+) feet\.?$/.exec(text);
+		const mSimple = /Your (?:base )?(?:walking )?speed is (?<speed>\d+) feet\.?$/.exec(text);
 		if (mSimple) {
 			race.speed = Number(mSimple.groups.speed);
 

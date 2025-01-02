@@ -5,6 +5,7 @@ import {DiceConvert, SkillTag, TagCondition} from "./converterutils-tags.js";
 import {ConverterUtilsMarkdown} from "./converterutils-markdown.js";
 import {AcConvert, AlignmentConvert, AttachedItemTag, CreatureConditionImmunityConverter, CreatureDamageImmunityConverter, CreatureDamageResistanceConverter, CreatureDamageVulnerabilityConverter, CreatureSavingThrowTagger, CreatureSpecialEquipmentTagger, DamageTypeTag, DetectNamedCreature, DragonAgeTag, LanguageTag, MiscTag, RechargeConvert, SenseFilterTag, SpeedConvert, SpellcastingTraitConvert, SpellcastingTypeTag, TagCreatureSubEntryInto, TagDc, TagHit, TagImmResVulnConditional, TraitActionTag} from "./converterutils-creature.js";
 import {SpellTag} from "./converterutils-entries.js";
+import {PropOrder} from "../utils-proporder.js";
 
 class _ConversionStateTextCreature extends ConversionStateTextBase {
 	constructor (
@@ -1717,12 +1718,25 @@ export class ConverterCreature extends ConverterBase {
 		const tksNoSize = tks.slice(ixSizeLast + 1);
 
 		const spl = tksNoSize.join("").split(StrUtil.COMMAS_NOT_IN_PARENTHESES_REGEX);
-		if (spl.length < 1) {
+		if (!spl.length) {
 			options.cbWarning(`Type/Alignment "${tksNoSize.join("")}" requires manual conversion`);
 			return;
 		}
 
 		const reType = new RegExp(`\\b(${Parser.MON_TYPES.join("|")})\\b`, "i");
+
+		if (spl.length === 1) {
+			const [pt] = spl;
+			const isType = reType.test(pt);
+			if (isType) {
+				stats.type = pt.trim();
+			} else {
+				stats.alignment = pt.toLowerCase().trim();
+				AlignmentConvert.tryConvertAlignment(stats, (ali) => options.cbWarning(`Alignment "${ali}" requires manual conversion`));
+			}
+			return;
+		}
+
 		const ixAlignmentStart = spl.length === 2
 			? 1
 			: 1 + spl.slice(1).findIndex(pt => !reType.test(pt));
