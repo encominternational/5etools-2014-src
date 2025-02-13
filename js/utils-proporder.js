@@ -239,7 +239,7 @@ export class PropOrder {
 			});
 
 		// ensure any non-orderable keys are maintained
-		const otherKeys = CollectionUtil.setDiff(keySet, seenKeys);
+		const otherKeys = keySet.difference(seenKeys);
 		[...otherKeys].forEach(prop => {
 			out[prop] = obj[prop];
 			if (!opts.fnUnhandledKey) return;
@@ -430,6 +430,7 @@ PropOrder._MONSTER = [
 	"summonedBySpell",
 	"summonedBySpellLevel",
 	"summonedByClass",
+	"summonedScaleByPlayerLevel",
 
 	"_isCopy",
 	PropOrder._ObjectKey.getCopyKey({fnGetModOrder: () => PropOrder._MONSTER__COPY_MOD}),
@@ -444,6 +445,7 @@ PropOrder._MONSTER = [
 	"ac",
 	"hp",
 	"speed",
+	"initiative",
 
 	"resource",
 
@@ -466,6 +468,7 @@ PropOrder._MONSTER = [
 	"languages",
 	"cr",
 	"pbNote",
+	"gear",
 
 	new PropOrder._ArrayKey("spellcasting", {
 		fnGetOrder: () => [
@@ -476,11 +479,13 @@ PropOrder._MONSTER = [
 			"constant",
 			"will",
 			"rest",
+			"restLong",
 			"daily",
 			"weekly",
 			"monthly",
 			"yearly",
 			"recharge",
+			"legendary",
 			"charges",
 
 			"ritual",
@@ -508,6 +513,7 @@ PropOrder._MONSTER = [
 	"reaction",
 	"legendaryHeader",
 	"legendaryActions",
+	"legendaryActionsLair",
 	"legendary",
 	"mythicHeader",
 	"mythic",
@@ -516,6 +522,7 @@ PropOrder._MONSTER = [
 	"footer",
 
 	"environment",
+	"treasure",
 	"familiar",
 	"dragonCastingColor",
 	"dragonAge",
@@ -643,6 +650,9 @@ PropOrder._FOUNDRY_MONSTER = [
 ];
 PropOrder._GENERIC_FLUFF = [
 	"name",
+
+	"preserveName",
+
 	"source",
 
 	"_copy",
@@ -860,6 +870,8 @@ PropOrder._BACKGROUND = [
 	"additionalSources",
 	"otherSources",
 	"reprintedAs",
+
+	"edition",
 
 	PropOrder._ObjectKey.getCopyKey({fnGetModOrder: () => PropOrder._BACKGROUND__COPY_MOD}),
 
@@ -1133,6 +1145,8 @@ PropOrder._ENTRY_DATA_OBJECT = [
 	"senses",
 
 	"resources",
+
+	"additionalSpells",
 ];
 PropOrder._CLASS_FEATURE = [
 	"name",
@@ -1833,6 +1847,7 @@ PropOrder._ITEM = [
 	"bow",
 	"bulletFirearm",
 	"bulletSling",
+	"cellEnergy",
 	"club",
 	"crossbow",
 	"dagger",
@@ -1864,6 +1879,8 @@ PropOrder._ITEM = [
 	"packContents",
 	"atomicPackContents",
 	"containerCapacity",
+
+	"light",
 
 	"optionalfeatures",
 	"attachedSpells",
@@ -2378,6 +2395,8 @@ PropOrder._TRAP = [
 	"trapHazType",
 
 	"rating",
+
+	"hauntBonus",
 
 	"effect",
 
